@@ -1,0 +1,55 @@
+<?php
+$element = new PortalElement;
+
+$media_arr = $element->getMediaList('m1');
+
+$slider = '';
+
+$count = 0;
+
+if (sizeof($media_arr) > 0) {
+
+    foreach ($media_arr as $arrm) {
+
+        $count++;
+
+        if ($count % 2 != 0)
+            $descr = '<div u="caption" t="L" d=-750 class="captionOrange jssor_caption">' . $arrm['title'] . '</div>';
+        else
+            $descr = '<div u="caption" t="R" t2=R d=-900 class="captionOrange jssor_caption2">' . $arrm['title'] . '</div>';
+
+        $file_name = $arrm['file_name'];
+
+        $slider .= '<div><img u="image" src="' . $file_name . '" />' . $descr . '</div>';
+    }
+    ?>
+
+    <link href="css/jssor.css" rel="stylesheet" type="text/css" media="all">
+
+    <script type="text/javascript" src="js/jssor/jssor.slider.mini.js"></script>
+
+    <script type="text/javascript" src="js/jssor/custom.js"></script>
+
+    <div class="push10">
+
+        <div id="slider1_container">
+
+            <div u="loading" class="jssor_loading">
+
+                <div class="jssor_inner_loading1"></div> 
+
+                <div class="jssor_inner_loading2"></div> 
+
+            </div> 
+
+            <div u="slides" class="jssor_container">
+
+                <?php echo $slider; ?>
+
+            </div> 
+
+        </div>
+
+    </div> 
+
+<?php } ?>

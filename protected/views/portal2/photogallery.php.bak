@@ -1,0 +1,121 @@
+<?php
+
+$element = new PortalElement;
+
+function GetPhotoAlbumList() {
+
+    $output = '';
+
+    $element = new PortalElement;
+    
+    $menu_id = $element->encrypt_decrypt('decrypt', $_GET['menu_id']);
+
+    $query1 = "SELECT * FROM ost_photo_album WHERE lang='en' ORDER BY event_dt DESC";
+
+    $result1 = Yii::app()->db->createCommand($query1)->queryAll();
+
+    $total_pages = sizeof($result1);
+
+    $currenturl = explode('&page=', Yii::app()->request->url);
+
+    $targetpage = $currenturl[0];
+
+    $limit = 12;
+
+    $page = 0;
+
+    if (isset($_GET['page']))
+        $page = $_GET['page'];
+
+    if ($page)
+        $start = ($page - 1) * $limit;
+    else
+        $start = 0;
+
+    $query2 = $query1 . " LIMIT $start, $limit";
+
+    $model = OstPhotoAlbum::model()->findAllBySql($query2);
+
+    if (sizeof($model) > 0) {
+
+        $count = 0;
+
+        foreach ($model as $row) {
+
+            $class = '';
+
+            if ($count % 4 == 0)
+                $class = 'first';
+
+            $img = 'images/demo/1200x400.gif';
+
+            $model2 = OstPhotoList::model()->findAllBySql("SELECT url, id FROM ost_photo_list WHERE album_id=" . $row->id . " ORDER BY sort ASC LIMIT 1");
+
+            if (sizeof($model2) > 0) {
+
+                foreach ($model2 as $row2) {
+
+                    $img = PortalTranslation::TranslateDocAttach($row2->id, $row2->url, 'url');
+                }
+            }
+//            $imgs = '';
+//            $model2 = OstPhotoList::model()->findByAttributes(array('album_id' => $row->id));
+//            if (sizeof($model2) > 0 && $model2->url != '')
+//                $imgs = $model2->url;
+            
+            $album_id = $element->encrypt_decrypt('encrypt', $row->id);
+
+            $output.= '<div class="one_quarter ' . $class . '">
+                        <article class="push30">
+                            <div class="boxholder push10"><img src="' . $img . '" alt=""></div>
+                            <a href="index.php?r=portal2/photogalleryview&menu_id=' . $_GET['menu_id'] . '&album_id=' . $album_id . '" class="hover"><b>' . PortalTranslation::TranslateGalleryTitle($row->id, $row->title) . ' &raquo;</b></a>
+                            
+                        </article>
+                    </div>';
+
+            $count++;
+        }
+    }
+
+    $output.= $element->pagination($limit, $total_pages, $page, $targetpage);
+
+    return $output;
+}
+?>
+<style>
+
+    a.hover:hover{ text-decoration: underline; }
+
+</style>
+
+<div id="sidebar_1" class="sidebar one_quarter first">
+
+    <aside>
+
+        <h2><?php echo PortalElement::getMasterTitle(); ?></h2>
+
+        <nav><?php echo PortalElement::getLeftMenu(); ?></nav>
+
+    </aside>
+
+</div>
+
+<div class="three_quarter">
+
+    <?php // include 'slider.php'; ?>
+
+    <h1 class="nospace" style="position:relative;">
+
+        <?php echo PortalElement::getMenuTitle(); ?>
+
+        <?php include 'favicon.php'; ?>
+
+    </h1>
+
+    <?php echo PortalElement::getBreadcrumbs(); ?>
+
+    <div class="clear"><?php echo GetPhotoAlbumList(); ?></div>
+
+</div>
+
+<div class="clear"></div>

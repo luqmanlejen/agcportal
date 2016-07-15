@@ -1,0 +1,59 @@
+<?php
+
+function checkfav() {
+
+    $menu_ext = '';
+
+    if (isset($_GET['bul_id']))
+        $menu_ext = $_GET['bul_id'];
+
+    if (isset($_GET['data_id']))
+        $menu_ext = $_GET['data_id'];
+    
+    if (isset($_GET['gal_id']))
+        $menu_ext = $_GET['gal_id'];
+
+    $output = '<a href="index.php?r=column/addfav&menu_id=' . $_GET['menu_id'] . '&menu_ext=' . $menu_ext . '"><div class="favourite" title="Add to Favorite List"></div></a>';
+
+    $usr_id = 0;
+
+    $menu_id = 0;
+
+    $menu_ext2 = 0;
+
+    $model2 = User::model()->findByAttributes(array('usr_id' => Yii::app()->session['usr_id_front']));
+
+    if (sizeof($model2) > 0)
+        $usr_id = $model2->id;
+
+    $oCommon = new CommonElement2;
+
+    $menu_id = $oCommon->encrypt_decrypt('decrypt', $_GET['menu_id']);
+
+    if ($menu_ext != '')
+        $menu_ext2 = $oCommon->encrypt_decrypt('decrypt', $menu_ext);
+
+    $model = Fav::model()->findByAttributes(array('usr_id' => $usr_id, 'menu_id' => $menu_id, 'menu_ext' => $menu_ext2));
+
+    if (sizeof($model) > 0)
+        $output = '<a href="index.php?r=column/removefav&id=' . $model->id . '"><div class="favourite added" title="Remove from Favorite List"></div></a>';
+
+    return $output;
+}
+?>
+<style>
+
+    .favourite { position : absolute; width : 24px; height : 24px; background : url(images/icon/fav-pub-gray.png) no-repeat; top : 0px; right : 0; }
+
+    .added { background : url(images/icon/fav-pub-yellow.png) no-repeat; }
+
+</style>
+
+<?php
+
+if (isset(Yii::app()->session['front_login']) && Yii::app()->session['front_login'] == 'y') {
+
+    echo checkfav();
+}
+?>
+
