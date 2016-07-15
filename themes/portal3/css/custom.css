@@ -1,0 +1,97 @@
+/*
+Responsive Template Name: RS-1200 Prototype 45
+File: Custom CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+.breadcrumbs{
+    padding-bottom : 5px;
+    margin-bottom : 15px;
+    border-bottom: 5px solid #E8E8E8;
+    font-size: 0.85em;
+	color: cadetblue; /*syuk 17062016 */
+}
+
+#dropdownlang{margin-right:30px;padding:5px;}
+
+/* Accordion */
+
+.mj_accordion{display:block; width:100%;list-style: none;padding:0;margin:0;}
+.mj_accordion li {margin-top : 15px;}
+.mj_accordion li:first-child{margin-top:0;}
+.mj_accordion .mj_accordion_item{
+    display:block; 
+    background:url("images/icons/gemicon/plus-16x16.png") no-repeat 9px center; 
+    border:1px solid #ddd;
+    padding:8px 15px 8px 40px; 
+    border-left:1px solid #E5E4E3;
+    cursor: pointer;
+    font-weight: bold;
+    background-color:#f5f5f5;	/* syuk 15052015 */
+    color:#003366;			/* syuk 15052015 */
+}
+.mj_accordion .mj_accordion_content{
+    display:none; 
+    padding:15px 32px; 
+    border:solid #E5E4E3; 
+    border-width:0 1px 1px 1px;
+}
+.mj_accordion .mj_accordion_item.active{color:#000; background-image:url("images/icons/gemicon/minus-16x16.png");}
+
+
+/* Tabs */
+
+.mj_tab{display:block; width:100%;}
+.mj_tab .mj_tab_items div{display:inline-block; float:left; margin:0 -1px -1px 0;padding:10px 20px; border:1px solid #E5E4E3;cursor:pointer;font-weight:bold;}
+/*.mj_tab .tab-nav li a:hover, .mj_tab .tab-nav li.ui-tabs-active a{color:#919191;}*/
+.mj_tab .mj_tab_items div.active{border-bottom-color:#FFFFFF;}
+.mj_tab .mj_tab_contents{clear:both;width:100%;}
+.mj_tab .mj_tab_contents div{display:block; padding:20px 25px 15px 25px; border:1px solid #E5E4E3;}
+
+.mj_tab .mj_tab_items div.active, .mj_tab .mj_tab_items div:hover,
+.mj_accordion .mj_accordion_item.active, .mj_accordion .mj_accordion_item:hover{color:#F90;}
+
+#tablenoborder, #tablenoborder td{border:0;}
+
+.down_arrow{
+    background-image:url('../../../images/down_arrow.png');
+    background-size : 5px 5px;
+    width : 5px;
+    height : 5px;
+    display : inline-block;
+}
+
+.leftmenu-li .active .down_arrow{background-image:url('../../../images/down_arrow_orange.png');}
+
+.sidebar aside nav a:hover .down_arrow{background-image:url('../../../images/down_arrow_orange.png');}
+
+#contentwithbg{position: relative;}
+
+#divbg1{
+    z-index: -2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+     background: url('../../../images/background_content.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#divbg2{
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background:white;
+    width: 100%;
+    height: 100%;
+    opacity :0.9;
+}
+
+.row3#contentwithbg{  background-color: rgba(255, 255, 255, 0.27);} /*syuk 21062015 */ 
